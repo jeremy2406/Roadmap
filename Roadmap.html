@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap: Datos & Automatización 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0b;
+    --surface: #131316;
+    --surface2: #1c1c21;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8;
+    --muted: #8a8880;
+    --muted2: #5a5856;
+
+    --basic: #1fd99a;
+    --basic-dim: rgba(31,217,154,0.12);
+    --basic-glow: rgba(31,217,154,0.25);
+
+    --inter: #4fa3ff;
+    --inter-dim: rgba(79,163,255,0.12);
+    --inter-glow: rgba(79,163,255,0.25);
+
+    --adv: #ff8c42;
+    --adv-dim: rgba(255,140,66,0.12);
+    --adv-glow: rgba(255,140,66,0.25);
+
+    --job: #c084fc;
+    --job-dim: rgba(192,132,252,0.12);
+    --job-glow: rgba(192,132,252,0.25);
+
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Instrument Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 24px 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(31,217,154,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--basic);
+    border: 1px solid rgba(31,217,154,0.3);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: fadeInDown 0.6s ease both;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--basic);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    animation: fadeInDown 0.7s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--basic) 0%, var(--inter) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    animation: fadeInDown 0.7s 0.2s ease both;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInDown 0.7s 0.3s ease both;
+  }
+
+  .hero-tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--muted);
+  }
+
+  /* ── TIMELINE STRIP ── */
+  .timeline-strip {
+    margin: 0 24px 48px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 0.8s 0.4s ease both;
+  }
+
+  .timeline-strip h3 {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .tl-bar {
+    display: flex;
+    height: 32px;
+    border-radius: 8px;
+    overflow: hidden;
+    gap: 2px;
+    margin-bottom: 14px;
+  }
+
+  .tl-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.7);
+    border-radius: 6px;
+    transition: flex 0.4s ease;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+
+  .tl-seg.s-basic { background: var(--basic); flex: 3; }
+  .tl-seg.s-inter { background: var(--inter); flex: 4; }
+  .tl-seg.s-adv { background: var(--adv); flex: 4; }
+  .tl-seg.s-job { background: var(--job); flex: 2; }
+  .tl-seg:hover { filter: brightness(1.1); }
+
+  .tl-labels {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .tl-lbl {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .tl-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  /* ── NAV TABS ── */
+  .nav-outer {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,11,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .nav-inner {
+    display: flex;
+    gap: 6px;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    background: transparent;
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  .nav-btn:hover { color: var(--text); border-color: var(--border2); }
+
+  .nav-btn.active-basic { background: var(--basic-dim); color: var(--basic); border-color: rgba(31,217,154,0.4); }
+  .nav-btn.active-inter { background: var(--inter-dim); color: var(--inter); border-color: rgba(79,163,255,0.4); }
+  .nav-btn.active-adv { background: var(--adv-dim); color: var(--adv); border-color: rgba(255,140,66,0.4); }
+  .nav-btn.active-job { background: var(--job-dim); color: var(--job); border-color: rgba(192,132,252,0.4); }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .level-section { display: none; }
+  .level-section.active { display: block; animation: fadeInUp 0.4s ease both; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── LEVEL HEADER ── */
+  .lvl-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 36px;
+    padding: 28px;
+    border-radius: 16px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lvl-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    opacity: 0.08;
+  }
+
+  .lh-basic { border-color: rgba(31,217,154,0.25); background: rgba(31,217,154,0.05); }
+  .lh-basic::before { background: var(--basic); }
+  .lh-inter { border-color: rgba(79,163,255,0.25); background: rgba(79,163,255,0.05); }
+  .lh-inter::before { background: var(--inter); }
+  .lh-adv { border-color: rgba(255,140,66,0.25); background: rgba(255,140,66,0.05); }
+  .lh-adv::before { background: var(--adv); }
+  .lh-job { border-color: rgba(192,132,252,0.25); background: rgba(192,132,252,0.05); }
+  .lh-job::before { background: var(--job); }
+
+  .lvl-num {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .num-basic { background: var(--basic-dim); color: var(--basic); }
+  .num-inter { background: var(--inter-dim); color: var(--inter); }
+  .num-adv { background: var(--adv-dim); color: var(--adv); }
+  .num-job { background: var(--job-dim); color: var(--job); }
+
+  .lvl-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .lvl-sub { font-size: 0.88rem; color: var(--muted); }
+
+  /* ── SECTION LABELS ── */
+  .sec-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin: 32px 0 14px;
+  }
+
+  .sec-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── TOPIC CARDS ── */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  @media (max-width: 600px) { .topics-grid { grid-template-columns: 1fr; } }
+
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    border-left: 3px solid;
+  }
+
+  .topic-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+    transform: translateY(-1px);
+  }
+
+  .tc-basic { border-left-color: var(--basic); }
+  .tc-inter { border-left-color: var(--inter); }
+  .tc-adv { border-left-color: var(--adv); }
+  .tc-job { border-left-color: var(--job); }
+
+  .topic-card h3 {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+
+  .topic-card p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .topic-arrow {
+    position: absolute;
+    top: 18px; right: 16px;
+    font-size: 14px;
+    color: var(--muted2);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .topic-card.open .topic-arrow { transform: rotate(90deg); color: var(--text); }
+
+  /* ── TOPIC DETAIL ── */
+  .topic-detail {
+    display: none;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 10px;
+    animation: fadeInUp 0.25s ease both;
+  }
+
+  .topic-detail.open { display: block; }
+
+  .detail-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 560px) { .detail-cols { grid-template-columns: 1fr; } }
+
+  .detail-col h4 {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 10px;
+  }
+
+  .detail-col ul { list-style: none; }
+
+  .detail-col ul li {
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .detail-col ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--muted2);
+    font-weight: 700;
+  }
+
+  .detail-col a {
+    color: var(--inter);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .detail-col a:hover { color: var(--text); text-decoration: underline; }
+
+  /* ── TOOLS ROW ── */
+  .tools-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+
+  .tool-chip {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .tool-chip:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+  /* ── RESOURCES ── */
+  .res-list { display: flex; flex-direction: column; gap: 6px; }
+
+  .res-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+
+  .res-item:hover { border-color: var(--border2); }
+
+  .res-tag {
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    white-space: nowrap;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .rt-v { background: rgba(255,80,80,0.15); color: #ff8080; }
+  .rt-c { background: rgba(31,217,154,0.12); color: var(--basic); }
+  .rt-d { background: rgba(79,163,255,0.12); color: var(--inter); }
+  .rt-dat { background: rgba(255,140,66,0.12); color: var(--adv); }
+  .rt-p { background: rgba(192,132,252,0.12); color: var(--job); }
+
+  .res-item a {
+    font-size: 0.8rem;
+    color: var(--text);
+    text-decoration: none;
+    line-height: 1.5;
+    transition: color 0.15s;
+  }
+
+  .res-item a:hover { color: var(--inter); }
+
+  /* ── PROJECTS ── */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+
+  .proj-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+  }
+
+  .proj-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+    background: var(--surface2);
+  }
+
+  .proj-num {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .pn-b { background: var(--basic-dim); color: var(--basic); }
+  .pn-i { background: var(--inter-dim); color: var(--inter); }
+  .pn-a { background: var(--adv-dim); color: var(--adv); }
+  .pn-j { background: var(--job-dim); color: var(--job); }
+
+  .proj-card h4 {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 7px;
+    color: var(--text);
+  }
+
+  .proj-card p {
+    font-size: 0.77rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── JOB SECTION ── */
+  .job-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 560px) { .job-grid { grid-template-columns: 1fr; } }
+
+  .job-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    border-top: 2px solid var(--job);
+    transition: all 0.2s;
+  }
+
+  .job-card:hover { background: var(--surface2); border-color: rgba(192,132,252,0.3); }
+
+  .job-card h3 {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .job-card ul { list-style: none; }
+
+  .job-card ul li {
+    font-size: 0.77rem;
+    color: var(--muted);
+    padding: 3px 0 3px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .job-card ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--job);
+    font-size: 10px;
+    top: 5px;
+  }
+
+  /* ── SALARY CARDS ── */
+  .salary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .salary-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .salary-card .amount {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--job);
+    margin: 8px 0 4px;
+    letter-spacing: -0.5px;
+  }
+
+  .salary-card .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .salary-card .title {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--muted2);
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer span { color: var(--basic); }
+
+  /* ── CERT CHIPS ── */
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 7px;
+    transition: border-color 0.2s;
+  }
+
+  .cert-item:hover { border-color: var(--border2); }
+
+  .cert-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .cert-desc { font-size: 0.74rem; color: var(--muted); }
+
+  .cert-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    padding: 3px 9px;
+    border-radius: 5px;
+    white-space: nowrap;
+    background: var(--basic-dim);
+    color: var(--basic);
+  }
+
+  /* ── PROGRESS INDICATOR ── */
+  .progress-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px 12px;
+    margin-bottom: 28px;
+  }
+
+  .progress-fill {
+    display: flex;
+    gap: 3px;
+  }
+
+  .progress-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border2);
+  }
+
+  .progress-dot.filled { background: var(--basic); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Roadmap 2026</div>
+  <h1>Datos &amp; <em>Automatización</em><br>De cero a profesional</h1>
+  <p class="hero-sub">Una guía estructurada y realista para conseguir trabajo en análisis de datos, BI y automatización. Recursos 100% gratuitos.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">12–18 meses</span>
+    <span class="hero-tag">Gratis</span>
+    <span class="hero-tag">Desde cero</span>
+    <span class="hero-tag">Python · SQL · Power BI</span>
+    <span class="hero-tag">Empleo real</span>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<div class="timeline-strip">
+  <h3>Duración estimada</h3>
+  <div class="tl-bar">
+    <div class="tl-seg s-basic" onclick="showLevel('basic')">Básico · 2–3m</div>
+    <div class="tl-seg s-inter" onclick="showLevel('inter')">Intermedio · 4–5m</div>
+    <div class="tl-seg s-adv" onclick="showLevel('adv')">Avanzado · 4–5m</div>
+    <div class="tl-seg s-job" onclick="showLevel('job')">Empleo</div>
+  </div>
+  <div class="tl-labels">
+    <span class="tl-lbl"><span class="tl-dot" style="background:var(--basic)"></span>Nivel básico</span>
+    <span class="tl-lbl"><span class="tl-dot" style="background:var(--inter)"></span>Nivel intermedio</span>
+    <span class="tl-lbl"><span class="tl-dot" style="background:var(--adv)"></span>Nivel avanzado</span>
+    <span class="tl-lbl"><span class="tl-dot" style="background:var(--job)"></span>Búsqueda de empleo</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-outer">
+  <nav class="nav-inner">
+    <button class="nav-btn active-basic" onclick="showLevel('basic')" id="btn-basic">🟢 Básico</button>
+    <button class="nav-btn" onclick="showLevel('inter')" id="btn-inter">🔵 Intermedio</button>
+    <button class="nav-btn" onclick="showLevel('adv')" id="btn-adv">🟠 Avanzado</button>
+    <button class="nav-btn" onclick="showLevel('job')" id="btn-job">🟣 Conseguir empleo</button>
+  </nav>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ══ BÁSICO ══ -->
+  <div id="level-basic" class="level-section active">
+
+    <div class="lvl-header lh-basic">
+      <div>
+        <span class="lvl-num num-basic">Nivel 01 · Básico</span>
+        <div class="lvl-title">Fundamentos sólidos</div>
+        <div class="lvl-sub">Aprende a pensar con datos y domina las herramientas esenciales antes de pasar al siguiente nivel</div>
+      </div>
+    </div>
+
+    <div class="sec-label">Temas clave — clic para expandir</div>
+
+    <div class="topics-grid">
+      <div class="topic-card tc-basic" onclick="toggle('b1', this)">
+        <h3>📐 Pensamiento analítico</h3>
+        <p>Aprende a hacer las preguntas correctas antes de tocar un solo dato</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-basic" onclick="toggle('b2', this)">
+        <h3>📊 Excel / Google Sheets</h3>
+        <p>La herramienta más usada en empresas para analizar datos rápidamente</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-basic" onclick="toggle('b3', this)">
+        <h3>🗄️ SQL básico</h3>
+        <p>El lenguaje estándar para consultar bases de datos. Imprescindible en todo trabajo de datos</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-basic" onclick="toggle('b4', this)">
+        <h3>🐍 Python básico</h3>
+        <p>El lenguaje más demandado para análisis. Empieza por la sintaxis y lógica esencial</p>
+        <span class="topic-arrow">›</span>
+      </div>
+    </div>
+
+    <div id="b1" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Identificar métricas relevantes para un problema</li>
+            <li>Formular hipótesis antes de analizar</li>
+            <li>Distinguir correlación de causalidad</li>
+            <li>Leer e interpretar gráficos correctamente</li>
+            <li>Comunicar hallazgos de forma simple</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://www.khanacademy.org/math/statistics-probability" target="_blank">Khan Academy: Estadística y probabilidad</a></li>
+            <li><a href="https://www.youtube.com/watch?v=7I6YBkMPap8" target="_blank">Estadística para principiantes – Dot CSV</a></li>
+            <li><a href="https://www.coursera.org/learn/statistical-inference-and-hypothesis-testing" target="_blank">Coursera: Inferencia estadística (audit)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="b2" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Fórmulas clave: BUSCARV, SI, CONTAR.SI, SUMAR.SI</li>
+            <li>Tablas dinámicas (Pivot Tables)</li>
+            <li>Gráficos y dashboards básicos</li>
+            <li>Limpieza de datos con fórmulas</li>
+            <li>Filtros avanzados y validación de datos</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://support.google.com/docs/table/25273" target="_blank">Funciones Google Sheets (oficial)</a></li>
+            <li><a href="https://chandoo.org/wp/" target="_blank">Chandoo.org – tutoriales Excel/Sheets</a></li>
+            <li><a href="https://www.youtube.com/@ExcelHero" target="_blank">ExcelHero en YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="b3" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>SELECT, WHERE, GROUP BY, ORDER BY</li>
+            <li>JOIN entre tablas (INNER, LEFT)</li>
+            <li>Funciones de agregación: COUNT, SUM, AVG, MAX</li>
+            <li>Filtrar grupos con HAVING</li>
+            <li>Subconsultas básicas</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://sqlbolt.com/" target="_blank">SQLBolt – aprendizaje visual interactivo</a></li>
+            <li><a href="https://mode.com/sql-tutorial/" target="_blank">Mode SQL Tutorial (en el navegador)</a></li>
+            <li><a href="https://www.w3schools.com/sql/" target="_blank">W3Schools SQL – referencia completa</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="b4" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Variables, tipos de datos, condicionales</li>
+            <li>Bucles y funciones básicas</li>
+            <li>Listas, diccionarios y tuplas</li>
+            <li>Leer archivos CSV y JSON</li>
+            <li>Introducción a pandas y matplotlib</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://cs50.harvard.edu/python/2022/" target="_blank">CS50P Harvard – Python desde cero (gratis)</a></li>
+            <li><a href="https://www.kaggle.com/learn/python" target="_blank">Kaggle: Python para datos</a></li>
+            <li><a href="https://realpython.com/" target="_blank">Real Python – artículos y tutoriales</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">Herramientas</div>
+    <div class="tools-row">
+      <span class="tool-chip">Excel</span>
+      <span class="tool-chip">Google Sheets</span>
+      <span class="tool-chip">Google Colab</span>
+      <span class="tool-chip">SQLiteOnline.com</span>
+      <span class="tool-chip">Kaggle Notebooks</span>
+      <span class="tool-chip">Python 3.x</span>
+      <span class="tool-chip">pandas (básico)</span>
+      <span class="tool-chip">matplotlib</span>
+    </div>
+
+    <div class="sec-label">Datasets para practicar</div>
+    <div class="res-list">
+      <div class="res-item"><span class="res-tag rt-dat">DATOS</span><a href="https://www.kaggle.com/datasets" target="_blank">Kaggle Datasets — cientos de datasets reales y limpios para practicar cualquier tema</a></div>
+      <div class="res-item"><span class="res-tag rt-dat">DATOS</span><a href="https://datos.gob.do/" target="_blank">Datos Abiertos RD — datos oficiales del gobierno dominicano para proyectos locales</a></div>
+      <div class="res-item"><span class="res-tag rt-dat">DATOS</span><a href="https://github.com/awesomedata/awesome-public-datasets" target="_blank">Awesome Public Datasets — repositorio en GitHub con datasets clasificados por tema</a></div>
+    </div>
+
+    <div class="sec-label">Proyectos de portafolio</div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <span class="proj-num pn-b">PROYECTO 01</span>
+        <h4>Dashboard de ventas en Excel</h4>
+        <p>Descarga un dataset de ventas de Kaggle, límpialo y crea un dashboard con tablas dinámicas, gráficos y KPIs (ventas por mes, top productos, margen bruto).</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-num pn-b">PROYECTO 02</span>
+        <h4>Análisis SQL con Northwind DB</h4>
+        <p>Usa la base de datos Northwind en SQLite. Responde preguntas de negocio: ¿Qué productos más venden? ¿Cuál es el cliente con más pedidos? Documenta tus queries.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-num pn-b">PROYECTO 03</span>
+        <h4>Primer análisis con Python</h4>
+        <p>Analiza el dataset Titanic con pandas en Google Colab. Limpia nulos, calcula estadísticas y crea 3 gráficas que cuenten una historia clara con los datos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ INTERMEDIO ══ -->
+  <div id="level-inter" class="level-section">
+
+    <div class="lvl-header lh-inter">
+      <div>
+        <span class="lvl-num num-inter">Nivel 02 · Intermedio</span>
+        <div class="lvl-title">Análisis real y visualización profesional</div>
+        <div class="lvl-sub">Automatiza tareas, crea dashboards interactivos y trabaja con datos reales de empresa</div>
+      </div>
+    </div>
+
+    <div class="sec-label">Temas clave — clic para expandir</div>
+
+    <div class="topics-grid">
+      <div class="topic-card tc-inter" onclick="toggle('i1', this)">
+        <h3>📈 Power BI / Tableau</h3>
+        <p>Herramientas de BI estándar en empresas para reportes interactivos de alto impacto</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-inter" onclick="toggle('i2', this)">
+        <h3>🐼 Python avanzado para datos</h3>
+        <p>Pandas, NumPy, seaborn y plotly para análisis y visualización a nivel profesional</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-inter" onclick="toggle('i3', this)">
+        <h3>⚙️ Automatización sin código</h3>
+        <p>Ahorra horas de trabajo con Make, Zapier y Google Apps Script</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-inter" onclick="toggle('i4', this)">
+        <h3>🗃️ SQL avanzado</h3>
+        <p>Window functions, CTEs y PostgreSQL para análisis complejos que te diferencian</p>
+        <span class="topic-arrow">›</span>
+      </div>
+    </div>
+
+    <div id="i1" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Conectar múltiples fuentes de datos</li>
+            <li>Crear medidas DAX en Power BI</li>
+            <li>Dashboards interactivos con filtros y drill-down</li>
+            <li>Publicar y compartir reportes en la nube</li>
+            <li>Diseño efectivo de dashboards (UX de datos)</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://learn.microsoft.com/es-es/training/powerplatform/power-bi" target="_blank">Microsoft Learn: Power BI (ruta oficial)</a></li>
+            <li><a href="https://www.youtube.com/@GuyInACube" target="_blank">Guy in a Cube – YouTube Power BI</a></li>
+            <li><a href="https://public.tableau.com/app/learn/how-to-videos" target="_blank">Tableau Public – videos tutoriales</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="i2" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Manipulación avanzada con pandas (merge, groupby, pivot)</li>
+            <li>Visualizaciones con seaborn y plotly</li>
+            <li>Limpieza de datos reales (sucios)</li>
+            <li>NumPy para cálculos numéricos eficientes</li>
+            <li>Jupyter Notebooks documentados</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://www.kaggle.com/learn/pandas" target="_blank">Kaggle: Pandas – curso completo gratis</a></li>
+            <li><a href="https://pandas.pydata.org/docs/user_guide/" target="_blank">Documentación oficial pandas</a></li>
+            <li><a href="https://www.youtube.com/@CoreySchafer" target="_blank">Corey Schafer – Python en YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="i3" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Scripts Python para mover y procesar archivos</li>
+            <li>Automatizar emails con smtplib / Gmail API</li>
+            <li>Make.com y Zapier para workflows</li>
+            <li>Google Apps Script para Sheets y Drive</li>
+            <li>Web scraping básico con BeautifulSoup</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://automatetheboringstuff.com/" target="_blank">Automate the Boring Stuff – libro libre</a></li>
+            <li><a href="https://www.make.com/en/help/tutorials" target="_blank">Make.com – tutoriales oficiales</a></li>
+            <li><a href="https://developers.google.com/apps-script/overview" target="_blank">Google Apps Script – guía oficial</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="i4" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Window functions: ROW_NUMBER, RANK, LAG, LEAD</li>
+            <li>CTEs (Common Table Expressions)</li>
+            <li>Optimización de consultas (índices, EXPLAIN)</li>
+            <li>Diseño ER y normalización de tablas</li>
+            <li>PostgreSQL y BigQuery sandbox</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://www.stratascratch.com/" target="_blank">StrataScratch – SQL para entrevistas</a></li>
+            <li><a href="https://pgexercises.com/" target="_blank">PostgreSQL Exercises (práctica interactiva)</a></li>
+            <li><a href="https://cloud.google.com/bigquery/docs/introduction" target="_blank">BigQuery Sandbox gratis de Google</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">Herramientas</div>
+    <div class="tools-row">
+      <span class="tool-chip">Power BI Desktop</span>
+      <span class="tool-chip">Tableau Public</span>
+      <span class="tool-chip">Looker Studio</span>
+      <span class="tool-chip">PostgreSQL</span>
+      <span class="tool-chip">Make.com</span>
+      <span class="tool-chip">Zapier</span>
+      <span class="tool-chip">seaborn</span>
+      <span class="tool-chip">plotly</span>
+      <span class="tool-chip">Git & GitHub</span>
+      <span class="tool-chip">VS Code</span>
+    </div>
+
+    <div class="sec-label">Recursos recomendados</div>
+    <div class="res-list">
+      <div class="res-item"><span class="res-tag rt-c">CURSO</span><a href="https://www.coursera.org/professional-certificates/google-data-analytics" target="_blank">Google Data Analytics Certificate — el más reconocido del mercado (auditable gratis)</a></div>
+      <div class="res-item"><span class="res-tag rt-v">VIDEO</span><a href="https://www.youtube.com/@AlexTheAnalyst" target="_blank">Alex The Analyst — canal completo sobre análisis de datos en YouTube</a></div>
+      <div class="res-item"><span class="res-tag rt-p">PRÁCTICA</span><a href="https://www.hackerrank.com/domains/sql" target="_blank">HackerRank SQL — desafíos organizados por nivel de dificultad</a></div>
+      <div class="res-item"><span class="res-tag rt-dat">DATOS</span><a href="https://www.google.com/publicdata/directory" target="_blank">Google Public Data Explorer — datos mundiales estructurados</a></div>
+    </div>
+
+    <div class="sec-label">Proyectos de portafolio</div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <span class="proj-num pn-i">PROYECTO 04</span>
+        <h4>Dashboard Power BI publicado</h4>
+        <p>Conecta datos de una API pública, crea un modelo con relaciones y publica un dashboard interactivo en Power BI Service con al menos 5 visualizaciones y filtros cruzados.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-num pn-i">PROYECTO 05</span>
+        <h4>Pipeline de automatización Python</h4>
+        <p>Script que descarga datos de una web, los limpia automáticamente, genera un reporte Excel y lo envía por email de forma programada con cron o Task Scheduler.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-num pn-i">PROYECTO 06</span>
+        <h4>EDA completo en GitHub</h4>
+        <p>Análisis exploratorio completo de un dataset de Kaggle. Documenta hallazgos en un Jupyter Notebook bien estructurado y súbelo a GitHub con README profesional.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ AVANZADO ══ -->
+  <div id="level-adv" class="level-section">
+
+    <div class="lvl-header lh-adv">
+      <div>
+        <span class="lvl-num num-adv">Nivel 03 · Avanzado</span>
+        <div class="lvl-title">Ingeniería de datos e IA</div>
+        <div class="lvl-sub">Pipelines reales en la nube, automatización inteligente y machine learning aplicado a problemas de negocio</div>
+      </div>
+    </div>
+
+    <div class="sec-label">Temas clave — clic para expandir</div>
+
+    <div class="topics-grid">
+      <div class="topic-card tc-adv" onclick="toggle('a1', this)">
+        <h3>🔄 Pipelines ETL / ELT</h3>
+        <p>Extrae, transforma y carga datos de forma automatizada, confiable y escalable</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-adv" onclick="toggle('a2', this)">
+        <h3>🤖 Automatización con IA</h3>
+        <p>Integra LLMs y agentes IA en tus workflows con n8n, Make y APIs modernas</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-adv" onclick="toggle('a3', this)">
+        <h3>☁️ Cloud y datos en escala</h3>
+        <p>Trabaja con grandes volúmenes de datos en Google Cloud, AWS o Azure</p>
+        <span class="topic-arrow">›</span>
+      </div>
+      <div class="topic-card tc-adv" onclick="toggle('a4', this)">
+        <h3>📉 Machine Learning aplicado</h3>
+        <p>Modelos predictivos para predecir ventas, detectar fraude o clasificar datos</p>
+        <span class="topic-arrow">›</span>
+      </div>
+    </div>
+
+    <div id="a1" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>Orquestación con Airflow o Prefect</li>
+            <li>Transformación con dbt (data build tool)</li>
+            <li>Conectar APIs REST y múltiples bases de datos</li>
+            <li>Manejo de errores, logs y alertas</li>
+            <li>Cargas incrementales vs full refresh</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://docs.getdbt.com/guides" target="_blank">dbt Guides – documentación oficial</a></li>
+            <li><a href="https://airflow.apache.org/docs/" target="_blank">Apache Airflow – documentación completa</a></li>
+            <li><a href="https://www.prefect.io/guides" target="_blank">Prefect Cloud – tier gratuito disponible</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="a2" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>n8n para workflows complejos con IA</li>
+            <li>Llamadas a APIs de OpenAI y Anthropic</li>
+            <li>Agentes IA con LangChain / LangGraph</li>
+            <li>RAG básico (búsqueda en documentos propios)</li>
+            <li>Integración de IA en pipelines existentes</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://docs.n8n.io/courses/" target="_blank">n8n – cursos oficiales gratuitos</a></li>
+            <li><a href="https://python.langchain.com/docs/get_started" target="_blank">LangChain Docs – tutoriales y guías</a></li>
+            <li><a href="https://docs.anthropic.com/" target="_blank">Anthropic Claude API – documentación</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="a3" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>BigQuery, Redshift o Azure Synapse</li>
+            <li>Cloud Storage: S3 y Google Cloud Storage</li>
+            <li>Serverless con Cloud Functions / Lambda</li>
+            <li>CI/CD básico para pipelines de datos</li>
+            <li>Docker para reproducibilidad</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://cloud.google.com/training/free" target="_blank">Google Cloud Skills Boost – cursos gratis</a></li>
+            <li><a href="https://aws.amazon.com/training/digital/" target="_blank">AWS Training Digital – contenido gratuito</a></li>
+            <li><a href="https://learn.microsoft.com/es-es/azure/" target="_blank">Microsoft Learn – Azure completo</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="a4" class="topic-detail">
+      <div class="detail-cols">
+        <div class="detail-col">
+          <h4>Habilidades a dominar</h4>
+          <ul>
+            <li>scikit-learn: regresión, clasificación, clustering</li>
+            <li>Evaluación de modelos: AUC, F1, RMSE</li>
+            <li>Feature engineering básico</li>
+            <li>XGBoost y LightGBM para competencias</li>
+            <li>Deploy de modelos con FastAPI en Render</li>
+          </ul>
+        </div>
+        <div class="detail-col">
+          <h4>Recursos gratuitos</h4>
+          <ul>
+            <li><a href="https://www.kaggle.com/learn/machine-learning" target="_blank">Kaggle: Intro to Machine Learning</a></li>
+            <li><a href="https://fast.ai/" target="_blank">Fast.ai – curso práctico de ML (gratis)</a></li>
+            <li><a href="https://scikit-learn.org/stable/tutorial/" target="_blank">Documentación scikit-learn – guía completa</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">Herramientas</div>
+    <div class="tools-row">
+      <span class="tool-chip">n8n</span>
+      <span class="tool-chip">Apache Airflow</span>
+      <span class="tool-chip">dbt</span>
+      <span class="tool-chip">BigQuery</span>
+      <span class="tool-chip">Docker</span>
+      <span class="tool-chip">FastAPI</span>
+      <span class="tool-chip">LangChain</span>
+      <span class="tool-chip">scikit-learn</span>
+      <span class="tool-chip">XGBoost</span>
+      <span class="tool-chip">GitHub Actions</span>
+      <span class="tool-chip">Supabase</span>
+      <span class="tool-chip">Streamlit</span>
+    </div>
+
+    <div class="sec-label">Recursos avanzados</div>
+    <div class="res-list">
+      <div class="res-item"><span class="res-tag rt-c">ZOOMCAMP</span><a href="https://datatalks.club/courses/data-engineering-zoomcamp.html" target="_blank">DataTalks.Club: Data Engineering Zoomcamp – el mejor curso gratuito de ingeniería de datos</a></div>
+      <div class="res-item"><span class="res-tag rt-c">ZOOMCAMP</span><a href="https://mlops-zoomcamp.datatalks.club/" target="_blank">MLOps Zoomcamp – despliegue y monitoreo de modelos en producción (gratis)</a></div>
+      <div class="res-item"><span class="res-tag rt-p">PRÁCTICA</span><a href="https://www.kaggle.com/competitions" target="_blank">Kaggle Competitions – compite con datos reales y muestra tu ranking en el CV</a></div>
+      <div class="res-item"><span class="res-tag rt-d">BLOG</span><a href="https://engineering.fb.com/category/data-infrastructure/" target="_blank">Meta Engineering Blog – casos reales de ingeniería de datos a escala</a></div>
+    </div>
+
+    <div class="sec-label">Proyectos de portafolio</div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <span class="proj-num pn-a">PROYECTO 07</span>
+        <h4>Pipeline ETL en la nube</h4>
+        <p>Extrae datos de una API pública, transfórmalos con dbt en BigQuery y visualízalos en Looker Studio. Automatiza con Airflow o GitHub Actions. Documenta la arquitectura.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-num pn-a">PROYECTO 08</span>
+        <h4>Agente IA para análisis</h4>
+        <p>Chatbot con LangChain que responde preguntas sobre un dataset CSV o PDF. Despliégalo gratis en Streamlit Cloud con README completo y demo en video de 2 minutos.</p>
+      </div>
+      <div class="proj-card">
+        <span class="proj-num pn-a">PROYECTO 09</span>
+        <h4>Modelo predictivo en producción</h4>
+        <p>Entrena XGBoost para predecir una métrica de negocio real (churn, precios, ventas). API con FastAPI en Render.com, con documentación técnica y métricas de evaluación.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EMPLEO ══ -->
+  <div id="level-job" class="level-section">
+
+    <div class="lvl-header lh-job">
+      <div>
+        <span class="lvl-num num-job">Fase Final · Empleo</span>
+        <div class="lvl-title">De estudiar a trabajar</div>
+        <div class="lvl-sub">Estrategias concretas y realistas para conseguir tu primer trabajo o cliente en datos</div>
+      </div>
+    </div>
+
+    <div class="sec-label">Estrategia completa de búsqueda</div>
+    <div class="job-grid">
+      <div class="job-card">
+        <h3>📁 Portafolio en GitHub</h3>
+        <ul>
+          <li>README profesional describiendo tu perfil</li>
+          <li>Al menos 5 proyectos bien documentados</li>
+          <li>Notebooks limpios con markdown explicativo</li>
+          <li>Código comentado y estructurado en carpetas</li>
+          <li>GitHub Pages para portafolio web visual</li>
+          <li>Incluye datasets, resultados y conclusiones</li>
+        </ul>
+      </div>
+      <div class="job-card">
+        <h3>📄 CV que destaca</h3>
+        <ul>
+          <li>Una sola página — directo al punto</li>
+          <li>Sección de proyectos antes que educación</li>
+          <li>Cuantifica logros: "Reduje tiempo de reporte 70%"</li>
+          <li>Lista clara de herramientas dominadas</li>
+          <li>Enlace a GitHub y LinkedIn visibles arriba</li>
+          <li>Usa plantillas de Harvard o Overleaf LaTeX</li>
+        </ul>
+      </div>
+      <div class="job-card">
+        <h3>🌐 Plataformas recomendadas</h3>
+        <ul>
+          <li>LinkedIn — activa "Open to Work" en perfil</li>
+          <li>Remote OK y We Work Remotely</li>
+          <li>Indeed RD y empleo.gob.do (local)</li>
+          <li>Upwork para proyectos freelance de datos</li>
+          <li>AngelList / Wellfound para startups</li>
+          <li>Glassdoor para investigar salarios reales</li>
+        </ul>
+      </div>
+      <div class="job-card">
+        <h3>🤝 Networking que funciona</h3>
+        <ul>
+          <li>Publica proyectos en LinkedIn semanalmente</li>
+          <li>Únete a comunidades PyData y DataDriven</li>
+          <li>Muestra tu posición de Kaggle en el CV</li>
+          <li>Contacta analysts con mensaje corto y específico</li>
+          <li>Contribuye a proyectos open source en GitHub</li>
+        </ul>
+      </div>
+      <div class="job-card">
+        <h3>🎯 Puestos para empezar</h3>
+        <ul>
+          <li>Data Analyst Junior</li>
+          <li>Business Intelligence Analyst</li>
+          <li>Automation / Workflow Specialist</li>
+          <li>Operations Analyst</li>
+          <li>Reporting Analyst</li>
+          <li>Data Entry Automation (primer paso)</li>
+        </ul>
+      </div>
+      <div class="job-card">
+        <h3>💡 Tips que marcan diferencia</h3>
+        <ul>
+          <li>Especialízate en un sector: retail, salud, finanzas</li>
+          <li>Consigue la certificación Google Data Analytics</li>
+          <li>Haz proyectos sobre empresas dominicanas reales</li>
+          <li>Inglés técnico mínimo nivel B1 es clave</li>
+          <li>Empieza a freelancear desde el nivel intermedio</li>
+          <li>Prepara respuestas STAR para entrevistas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec-label">Certificaciones recomendadas (gratuitas o bajo costo)</div>
+    <div class="cert-item">
+      <span class="cert-icon">🏆</span>
+      <div>
+        <div class="cert-name"><a href="https://grow.google/certificates/data-analytics/" target="_blank" style="color:inherit;text-decoration:none">Google Data Analytics Certificate</a></div>
+        <div class="cert-desc">El más reconocido mundialmente para analistas. Disponible en Coursera, auditable gratis.</div>
+      </div>
+      <span class="cert-badge">MUY RECOMENDADO</span>
+    </div>
+    <div class="cert-item">
+      <span class="cert-icon">📊</span>
+      <div>
+        <div class="cert-name"><a href="https://learn.microsoft.com/es-es/certifications/power-bi-data-analyst-associate/" target="_blank" style="color:inherit;text-decoration:none">Microsoft PL-300: Power BI Data Analyst</a></div>
+        <div class="cert-desc">Certificación oficial de Microsoft para Power BI. Muy valorada en empresas latinoamericanas.</div>
+      </div>
+      <span class="cert-badge">RECOMENDADO</span>
+    </div>
+    <div class="cert-item">
+      <span class="cert-icon">🐍</span>
+      <div>
+        <div class="cert-name"><a href="https://www.kaggle.com/learn/overview" target="_blank" style="color:inherit;text-decoration:none">Kaggle Certificates — Python, SQL, ML, Pandas</a></div>
+        <div class="cert-desc">Completamente gratuitos. Fáciles de obtener y muestran conocimiento práctico concreto.</div>
+      </div>
+      <span class="cert-badge">GRATUITO</span>
+    </div>
+    <div class="cert-item">
+      <span class="cert-icon">☁️</span>
+      <div>
+        <div class="cert-name"><a href="https://cloud.google.com/certification/data-engineer" target="_blank" style="color:inherit;text-decoration:none">Google Professional Data Engineer</a></div>
+        <div class="cert-desc">Para el nivel avanzado. Abre puertas a empleos remotos con salarios altos en USD.</div>
+      </div>
+      <span class="cert-badge">AVANZADO</span>
+    </div>
+
+    <div class="sec-label">Salarios de referencia 2026</div>
+    <div class="salary-grid">
+      <div class="salary-card">
+        <div class="title">Data Analyst Junior · RD</div>
+        <div class="amount">RD$45K–80K</div>
+        <div class="label">mensual · con inglés puede superar RD$90,000</div>
+      </div>
+      <div class="salary-card">
+        <div class="title">Data Analyst · Remoto USD</div>
+        <div class="amount">$800–$2,500</div>
+        <div class="label">USD/mes · desde RD para empresas internacionales</div>
+      </div>
+      <div class="salary-card">
+        <div class="title">Automation Specialist · Freelance</div>
+        <div class="amount">$25–$75</div>
+        <div class="label">USD/hora en Upwork · proyectos n8n y Python</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>Roadmap creado para <span>República Dominicana</span> y Latinoamérica · Recursos actualizados 2026</p>
+  <p style="margin-top:8px">Todos los recursos listados son <span>100% gratuitos</span> o auditables sin costo</p>
+</footer>
+
+<script>
+  function showLevel(level) {
+    document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.className = 'nav-btn';
+    });
+    document.getElementById('level-' + level).classList.add('active');
+    document.getElementById('btn-' + level).classList.add('active-' + level);
+    window.scrollTo({ top: document.querySelector('.nav-outer').offsetTop - 10, behavior: 'smooth' });
+  }
+
+  function toggle(id, card) {
+    const detail = document.getElementById(id);
+    const isOpen = detail.classList.contains('open');
+    document.querySelectorAll('.topic-detail').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('open'));
+    if (!isOpen) {
+      detail.classList.add('open');
+      card.classList.add('open');
+    }
+  }
+</script>
+</body>
+</html>
